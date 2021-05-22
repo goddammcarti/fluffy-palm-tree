@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Spisok_del</title>
+	<style>
+        body{
+            display: flex;
+            justify-content: center;
+        }
+
+		input, label, button, a, li {
+			font-size: 2.45em;
+			margin: 5px 30px;
+		}
+	</style>
+</head>
+<body>
+	<form name="listMenu">
+		<div><label for="name">Сделайте свой список дел 👽</label></div>
+		<div><input name="name" id="name" type="text" placeholder="Запиши сюда 🧐"  ></div>
+		<div><button name="btn">Добавить</button></div>
+	</form>
+	<ol id="skedList"></ol>
+	<script>
+		const $form = document.forms.listMenu;//
+		const $list = document.getElementById('skedList');//
+		const savedList = localStorage.getItem('list');
+
+		if (savedList) {
+			$list.innerHTML = savedList;
+		}
+
+		function createSked(subSked) {
+		const $li = document.createElement('li');//
+		const $spanText = document.createElement('span');
+		$spanText.textContent = subSked;
+		$li.append($spanText);
+			return $li;
+		}
+		$form.addEventListener('submit', function(event) {//
+			event.preventDefault();//страница не обновляется 
+
+			const subSked = $form.name.value;//
+			const $newSked = createSked(subSked);//
+			$list.append($newSked);
+
+			localStorage.setItem('list', $list.innerHTML)
+		})
+	</script>
+</body>
+</html>
